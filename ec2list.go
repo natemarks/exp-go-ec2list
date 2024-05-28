@@ -81,7 +81,7 @@ func main() {
 	}
 }
 
-func extractName(arn string) string {
-	parts := strings.Split(arn, "/")
-	return parts[len(parts)-1]
-}
+//func extractName(arn string) string {
+//	parts := strings.Split(arn, "/")
+//	return parts[len(parts)-1]
+//}
