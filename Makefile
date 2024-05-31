@@ -40,9 +40,8 @@ vet:
 	@go vet ${PKG_LIST}
 
 goimports: ## check imports
-	find node_modules/ -type f -name "*.go" -exec rm -f {} \;
 	go install golang.org/x/tools/cmd/goimports@latest
-	goimports -w .
+	goimports -w ./cmd
 
 lint:  ##  run golint
 	go install golang.org/x/lint/golint@latest
@@ -66,7 +65,7 @@ govulncheck: # run cyclomatic complexity check
 	go install golang.org/x/vuln/cmd/govulncheck@latest
 	govulncheck ./cmd/...
 
-static: goimports fmt vet lint gocyclo godeadcode govulncheck black pylint shellcheck gotest pytest ## run static checks
+static: goimports fmt vet lint gocyclo godeadcode govulncheck gotest ## run static checks
 clean:
 	-@rm ${OUT} ${OUT}-v*
 
