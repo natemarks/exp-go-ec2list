@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/sertvitas/exp-go-ec2list/helper"
 	"log"
 	"os"
 	"strings"
@@ -51,7 +52,7 @@ func main() {
 	t.AppendHeader(table.Row{"Cluster Name", "Task Definition", "Desired Count", "Pending Count", "Running Count", "Container Image"})
 
 	for _, clusterArn := range clusterArns {
-		clusterName := extractName(clusterArn)
+		clusterName := helper.ExtractName(clusterArn)
 
 		// List services in the cluster
 		servicesOutput, err := ecsClient.ListServices(context.TODO(), &ecs.ListServicesInput{
@@ -88,7 +89,7 @@ func main() {
 
 				containerImages := ""
 				for _, containerDef := range taskDefinitionOutput.TaskDefinition.ContainerDefinitions {
-					containerImage := extractImageName(*containerDef.Image)
+					containerImage := helper.ExtractImageName(*containerDef.Image)
 					if !strings.Contains(containerImage, "nginx") {
 						if containerImages != "" {
 							containerImages += ", "
@@ -99,7 +100,7 @@ func main() {
 
 				t.AppendRow(table.Row{
 					clusterName,
-					extractName(*taskDefinition),
+					helper.ExtractName(*taskDefinition),
 					deployment.DesiredCount,
 					deployment.PendingCount,
 					deployment.RunningCount,
@@ -110,14 +111,4 @@ func main() {
 	}
 
 	t.Render()
-}
-
-func extractName(arn string) string {
-	parts := strings.Split(arn, "/")
-	return parts[len(parts)-1]
-}
-
-func extractImageName(image string) string {
-	parts := strings.Split(image, "/")
-	return parts[len(parts)-1]
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/sertvitas/exp-go-ec2list/helper"
 	"log"
 	"os"
 	"strings"
@@ -35,7 +36,7 @@ func main() {
 
 	// Iterate over each cluster
 	for _, clusterArn := range clustersOutput.ClusterArns {
-		clusterName := extractName(clusterArn)
+		clusterName := helper.ExtractName(clusterArn)
 
 		if strings.Contains(clusterName, partialClusterName) {
 			// List tasks with desired status RUNNING
@@ -49,7 +50,7 @@ func main() {
 
 			fmt.Printf("Cluster: %s\n", clusterName)
 			for _, taskArn := range tasksOutput.TaskArns {
-				taskID := extractName(taskArn)
+				taskID := helper.ExtractName(taskArn)
 
 				// Describe the task to get the task definition ARN
 				describeTasksOutput, err := ecsClient.DescribeTasks(context.TODO(), &ecs.DescribeTasksInput{

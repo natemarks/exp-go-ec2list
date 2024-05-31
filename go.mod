@@ -1,4 +1,4 @@
-module exp-go-ec2list
+module github.com/sertvitas/exp-go-ec2list
 
 go 1.21
 
