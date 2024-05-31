@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/sertvitas/exp-go-ec2list/helper"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/sertvitas/exp-go-ec2list/helper"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
